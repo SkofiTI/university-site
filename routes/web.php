@@ -20,7 +20,9 @@ Route::get("/interests", [MainController::class, 'interestPage']);
 Route::get("/education", [MainController::class, 'educationPage']);
 Route::get("/photo-album", [MainController::class, 'photoAlbumPage']);
 Route::get("/contact", [MainController::class, 'contactPage']);
-Route::post("/contact", [MainController::class, 'sendEmail'])->name('contact.send');
 Route::get("/test", [MainController::class, 'testPage']);
-Route::post("/test", [MainController::class, 'sendTest'])->name('test.send');
 Route::get("/history", [MainController::class, 'historyPage']);
+
+Route::post("/interests", [MainController::class, 'createInterest'])->name('interest.store');
+Route::post("/contact", [MainController::class, 'sendEmail'])->name('contact.send');
+Route::post("/test", [MainController::class, 'sendTest'])->name('test.send');

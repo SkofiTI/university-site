@@ -38,27 +38,5 @@ nav {
                 }
             }
         }
-
-        .interests-dropdown {
-            position: relative;
-
-            .dropdown-content {
-                display: none;
-                position: absolute;
-                z-index: 10000;
-
-                a {
-                    display: block;
-                    margin: 5px 0;
-                    font-size: 14px;
-                }
-            }
-
-            &:hover {
-                .dropdown-content {
-                    display: block;
-                }
-            }
-        }
     }
 }

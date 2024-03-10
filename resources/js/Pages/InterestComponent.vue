@@ -7,6 +7,39 @@
         </div>
         <div class="interests-content">
         </div>
+        <div class="interests-add">
+            <div class="interests-add__item">
+                <h4>Добавить новый интерес</h4>
+                <form @submit.prevent="addInterest">
+                    <div class="form-item">
+                        <input type="text" v-model="newInterest.name" placeholder="Название (id)" required />
+                    </div>
+                    <div class="form-item">
+                        <input type="text" v-model="newInterest.description" placeholder="Описание" required />
+                    </div>
+                    <div class="form-item">
+                        <button type="submit">Отправить</button>
+                    </div>
+                </form>
+            </div>
+            <div class="interests-add__item">
+                <h4>Добавить элемент к интересу</h4>
+                <form @submit.prevent="addInterestItem">
+                    <div class="form-item">
+                        <select v-model="newInterestItem.name">
+                            <option disabled value="">Выберите интерес</option>
+                            <option v-for="interest in interests" :value="interest.name">{{ interest.description }}</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <input type="text" v-model="newInterestItem.item" placeholder="Элемент" required />
+                    </div>
+                    <div class="form-item">
+                        <button type="submit">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,7 +56,20 @@ export default {
     props: {
         interests: Array
     },
-
+    
+    data() {
+        return {
+            newInterest: {
+                name: '',
+                description: '',
+                
+            },
+            newInterestItem: {
+                name: '',
+                item: '',
+            },
+        };
+    },
     mounted() {
         updatePageHistory();
         this.createInterests(this.interests);
@@ -32,7 +78,7 @@ export default {
         createInterests(interests) {
             const sidebar = document.querySelector('.menu');
             const content = document.querySelector('.interests-content');
-
+            console.log(interests)
             interests.forEach(({ name, description, items }) => {
                 const interestSidebarTitle = document.createElement('h2');
                 interestSidebarTitle.innerHTML = `${description}<a href="#${name}"> #</a>`;
@@ -59,7 +105,25 @@ export default {
                     content.appendChild(itemContent);
                 });
             });
-        }
+        },
+        addInterest() {
+            const { name, description } = this.newInterest;
+
+            if (!name || !description) {
+                return;
+            }
+
+            this.$inertia.post('/interests', this.newInterest);
+        },
+        addInterestItem() {
+            const { name, item } = this.newInterestItem;
+
+            if (!name || !item) {
+                return;
+            }
+
+            this.$inertia.post('/interests', this.newInterestItem);
+        },
     },
 };
 </script>
